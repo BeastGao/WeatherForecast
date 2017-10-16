@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<litepal>
+    <dbname value="cool_weather" />
+    <list>
+
+        <mapping class="com.lenovo.weatherforecast.db.Province" />
+        <mapping class="com.lenovo.weatherforecast.db.City" />
+        <mapping class="com.lenovo.weatherforecast.db.County" />
+
+    </list>
+</litepal>
