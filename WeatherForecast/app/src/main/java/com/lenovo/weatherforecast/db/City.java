@@ -1,10 +1,12 @@
 package com.lenovo.weatherforecast.db;
 
+import org.litepal.crud.DataSupport;
+
 /**
  * Created by 高繁 on 2017/10/16.
  */
 
-public class City {
+public class City extends DataSupport{
     private int id;
     private String cityName;
     private int cityCode;
@@ -41,4 +43,5 @@ public class City {
     public void setId(int id) {
         this.id = id;
     }
+
 }
