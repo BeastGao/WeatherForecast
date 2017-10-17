@@ -2,9 +2,11 @@ package com.lenovo.weatherforecast.util;
 
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.lenovo.weatherforecast.db.City;
 import com.lenovo.weatherforecast.db.County;
 import com.lenovo.weatherforecast.db.Province;
+import com.lenovo.weatherforecast.gson.Weather;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -82,5 +84,21 @@ public class Utility {
 
         }
         return false;
+    }
+    /**
+     * 将返回的JSON数据解析成Weather实体类
+     */
+    public static Weather handleWeatherResponse(String response){
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather5");
+            String weatherContent = jsonArray.getJSONObject(0).toString();
+            return new Gson().fromJson(weatherContent,Weather.class);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+
     }
 }
