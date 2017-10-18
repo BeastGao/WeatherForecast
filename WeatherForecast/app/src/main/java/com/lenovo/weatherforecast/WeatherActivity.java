@@ -1,5 +1,6 @@
 package com.lenovo.weatherforecast;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.lenovo.weatherforecast.gson.Forecast;
 import com.lenovo.weatherforecast.gson.Weather;
+import com.lenovo.weatherforecast.service.AutoUpdateService;
 import com.lenovo.weatherforecast.util.HttpUtil;
 import com.lenovo.weatherforecast.util.Utility;
 
@@ -169,7 +171,7 @@ public class WeatherActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
-                runOnUiThread(new Runnable() {
+                runOnUiThread(  new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_LONG).show();
@@ -192,6 +194,7 @@ public class WeatherActivity extends AppCompatActivity {
                             editor.putString("weather", responseText);
                             editor.apply();
                             showWeatherInfo(weather);
+
                         } else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_LONG).show();
                         }
@@ -239,6 +242,12 @@ public class WeatherActivity extends AppCompatActivity {
         carWashText.setText(carWash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
+        if (weather != null && "ok".equals(weather.status)){
+            Intent intent = new Intent(this,AutoUpdateService.class);
+            startService(intent);
+        }else {
+            Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_LONG).show();
+        }
 
     }
 }
